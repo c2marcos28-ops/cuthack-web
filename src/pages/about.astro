@@ -1,0 +1,118 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description={`${SITE_TITLE}とは何か、運営者・コンセプト・思想についての説明`} />
+		<style>
+			main {
+				max-width: 760px;
+				margin: 0 auto;
+				padding: 3em 1em 5em;
+			}
+			h1 {
+				font-size: 2.5rem;
+				margin-bottom: 0.3em;
+			}
+			.subtitle {
+				color: rgb(var(--gray));
+				margin-bottom: 2em;
+				font-size: 1.1em;
+			}
+			h2 {
+				margin-top: 2em;
+				font-size: 1.5em;
+				border-bottom: 3px solid rgb(var(--accent));
+				padding-bottom: 0.3em;
+				display: inline-block;
+			}
+			.profile {
+				background: rgb(var(--gray-light));
+				padding: 1.5em;
+				border-radius: 12px;
+				margin: 2em 0;
+			}
+			.profile-name {
+				font-weight: 700;
+				margin: 0 0 0.5em;
+				font-size: 1.1em;
+			}
+			ul.values {
+				padding-left: 1.5em;
+			}
+			ul.values li {
+				margin-bottom: 0.5em;
+				line-height: 1.7;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Cut Hack について</h1>
+			<p class="subtitle">動画編集を、ハックしろ。</p>
+
+			<h2>このサイトの目的</h2>
+			<p>
+				動画編集の <strong>最新情報</strong> と <strong>効率化のためのテク</strong> を、
+				ひとつにまとめる場所です。
+			</p>
+			<p>
+				海外の最新AIツール、現場で使えるプラグイン、編集者の効率化ノウハウなど、
+				動画編集に関わる情報を、<strong>現役動画編集者の視点</strong>で実務目線でまとめて毎日アップデートします。
+			</p>
+
+			<h2>大切にしてること</h2>
+			<ul class="values">
+				<li><strong>動画編集者目線</strong> ― AIガチ勢じゃなく、現場の編集者目線で「実務で使えるか」を判断する</li>
+				<li><strong>誠実な情報</strong> ― 公式情報と実体験を明確に区別。誇張表現はしない</li>
+				<li><strong>毎日アップデート</strong> ― 変化の早いAI業界で、常に最新情報を届ける</li>
+				<li><strong>効率化に集中</strong> ― 「速く・楽に」というたった1つの軸で記事を厳選する</li>
+			</ul>
+
+			<h2>運営者</h2>
+			<div class="profile">
+				<p class="profile-name">寺岡 優汰（マルコス）</p>
+				<p>
+					株式会社LunoX 代表 ／ 動画編集スクール「SEED」代表 ／ 現役動画編集者
+				</p>
+				<p>
+					YouTube制作のディレクション、企業案件の動画編集、SEEDの講師業など、
+					動画編集の現場で日々手を動かしながら、
+					効率化の仕組みを作り続けています。
+				</p>
+				<p style="margin-bottom: 0;">
+					YouTube「在宅ワーク効率化チャンネル」運営。
+				</p>
+			</div>
+
+			<h2>記事の構成</h2>
+			<p>
+				Cut Hack の記事は2つのタイプに分かれます。
+			</p>
+			<ul class="values">
+				<li>
+					<strong>🤖 自動キュレーション記事</strong> ―
+					AIが公式情報・公開デモを整理して書く記事。冒頭に「※筆者未使用、AI整理」を明記しています。
+				</li>
+				<li>
+					<strong>✍️ マルコス実体験記事</strong> ―
+					マルコスが実際に現場で使った体験を書く記事。仲村TV・SEED・YouTube制作の現場から書きます。
+				</li>
+			</ul>
+
+			<h2>運営方針</h2>
+			<p>
+				このサイトは、株式会社LunoX のメディア事業として運営しています。
+				特定のツールやサービスをアフィリエイトで紹介する場合がありますが、
+				「動画編集者目線で本当に使えるかどうか」を最優先に判断します。
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>

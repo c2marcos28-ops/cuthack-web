@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { CATEGORIES, SITE_DESCRIPTION, SITE_TITLE, getCategory } from '../../consts';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={`記事一覧 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 1100px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 1em;
+			}
+			.page-header {
+				text-align: center;
+				margin-bottom: 3em;
+			}
+			.page-header h1 {
+				font-size: 2.5rem;
+				margin-bottom: 0.3em;
+			}
+			.page-header p {
+				color: rgb(var(--gray));
+				margin: 0;
+			}
+			.categories-bar {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+				justify-content: center;
+				margin-bottom: 2.5em;
+			}
+			.category-chip {
+				display: inline-block;
+				padding: 0.4em 1em;
+				background: rgb(var(--gray-light));
+				border-radius: 999px;
+				font-size: 0.9em;
+				text-decoration: none;
+				color: rgb(var(--gray-dark));
+				transition: 0.2s ease;
+			}
+			.category-chip:hover {
+				background: rgba(var(--accent), 0.1);
+				color: rgb(var(--accent));
+			}
+			ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.5rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			ul li {
+				width: calc(33.333% - 1rem);
+			}
+			ul li * {
+				text-decoration: none;
+				transition: 0.2s ease;
+			}
+			ul li img {
+				margin-bottom: 0.5rem;
+				border-radius: 12px;
+			}
+			ul li a {
+				display: block;
+			}
+			.title {
+				margin: 0.5em 0 0.3em 0;
+				color: rgb(var(--black));
+				line-height: 1.4;
+				font-size: 1.1em;
+			}
+			.date,
+			.cat {
+				margin: 0;
+				color: rgb(var(--gray));
+				font-size: 0.85em;
+			}
+			.cat {
+				color: rgb(var(--accent));
+				font-weight: 600;
+			}
+			ul li a:hover .title {
+				color: rgb(var(--accent));
+			}
+			.empty {
+				text-align: center;
+				padding: 4em 1em;
+				color: rgb(var(--gray));
+			}
+			@media (max-width: 900px) {
+				ul li {
+					width: calc(50% - 0.75rem);
+				}
+			}
+			@media (max-width: 600px) {
+				ul {
+					gap: 1em;
+				}
+				ul li {
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="page-header">
+				<h1>📰 すべての記事</h1>
+				<p>動画編集を効率化するAI・ツール・テクニックを毎日アップデート</p>
+			</div>
+
+			<div class="categories-bar">
+				{
+					CATEGORIES.map((cat) => (
+						<a class="category-chip" href={`/${cat.slug}/`}>
+							{cat.emoji} {cat.name}
+						</a>
+					))
+				}
+			</div>
+
+			<section>
+				{
+					articles.length === 0 ? (
+						<div class="empty">
+							<p>まだ記事はありません。これから毎日更新していきます。</p>
+						</div>
+					) : (
+						<ul>
+							{articles.map((article) => {
+								const cat = getCategory(article.data.category);
+								return (
+									<li>
+										<a href={`/articles/${article.id}/`}>
+											{article.data.heroImage && (
+												<Image
+													width={400}
+													height={225}
+													src={article.data.heroImage}
+													alt={article.data.heroImageAlt ?? ''}
+												/>
+											)}
+											<p class="cat">
+												{cat?.emoji} {cat?.name}
+											</p>
+											<h4 class="title">{article.data.title}</h4>
+											<p class="date">
+												<FormattedDate date={article.data.publishedAt} />
+											</p>
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					)
+				}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
